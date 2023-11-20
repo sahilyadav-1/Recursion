@@ -1,16 +1,12 @@
-int coinExchangeProblem(int *coin, int size, int amount, int currentCoin){
-    
-    if(amount == 0){
-        return 1;
-    }
-    if(amount < 0){
+int optimalStrategy(int *arr, int i, int j){
+    if(i>j){
         return 0;
     }
-
-    int ways = 0;
     
-    for(int i=currentCoin; i<size; i++){
-    ways = ways + coinExchangeProblem(coin, size, amount - coin[i], i);
-    }
-    return ways;
+    int choice1 = arr[i] + min(optimalStrategy(arr, i+2, j),optimalStrategy(arr, i+1, j-1));
+    
+    int choice2 = arr[j] + min(optimalStrategy(arr, i,j-2),optimalStrategy(arr, i+1, j-1));
+
+    int ans = max(choice1, choice2);
+    return ans;
 }
